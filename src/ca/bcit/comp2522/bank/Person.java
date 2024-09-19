@@ -26,7 +26,7 @@ public class Person {
      * @param dateDied will be assigned to the instance data: dateDied
      */
     public Person (final Name name,final Date dateBorn,final Date dateDied) {
-        this.name = name;
+        this.name =     name;
         this.dateBorn = dateBorn;
         this.dateDied = dateDied;
 
@@ -49,7 +49,8 @@ public class Person {
      */
     public String getDetails(){
 
-        StringBuilder builder1;
+        final StringBuilder builder1;
+
         builder1 = new StringBuilder();
 
         builder1.append(name.getFullName());
@@ -82,7 +83,9 @@ public class Person {
      * @return person's information in different format
      */
     public String printPersonInfo(){
-        StringBuilder builder2;
+
+        final StringBuilder builder2;
+
         builder2 = new StringBuilder();
 
         builder2.append(name.getFullName());

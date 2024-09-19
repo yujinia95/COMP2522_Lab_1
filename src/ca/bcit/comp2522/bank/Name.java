@@ -20,8 +20,8 @@ public class Name {
 
     // Creating variables to truncate index for to set name as capital letter for first letter of first name and last
     // name and lower case for rest of the names
-    private final int nameIndexZero = 0;
-    private final int nameIndexOne = 1;
+    private final int nameIndexZero =   0;
+    private final int nameIndexOne =    1;
 
     /**
      * Constructs a Name object with a specified first and last name.
@@ -33,8 +33,9 @@ public class Name {
      * @throws IllegalArgumentException if the name is invalid.
      */
     public Name(final String firstName,final String lastName) {
-        isFirstNameValid(firstName);
-        isLastNameValid(lastName);
+        validateFirstName(firstName);
+        validateLastName(lastName);
+
         this.firstName = firstName;
         this.lastName = lastName;
     }
@@ -73,6 +74,7 @@ public class Name {
      * @return the full name
      */
     public String getFullName() {
+
           return firstName.substring(nameIndexZero, nameIndexOne).toUpperCase() +
                   firstName.substring(nameIndexOne).toLowerCase() + " "
                 + lastName.substring(nameIndexZero, nameIndexOne).toUpperCase() +
@@ -85,12 +87,15 @@ public class Name {
      */
     public String getReverseName(){
 
-        final int startIndex  = 1;
-        final int decrementValue  = 1;
+        final int startIndex;
+        final int decrementValue;
+        final String fullName = getFullName();
+        final StringBuilder reverseFullName;
 
-        String fullName = getFullName();
-        StringBuilder reverseFullName;
-        reverseFullName = new StringBuilder();
+        startIndex =        1;
+        decrementValue  =   1;
+        reverseFullName =   new StringBuilder();
+
         for( int i = fullName.length() - startIndex; i >= decrementValue; i--) {
             reverseFullName.append(fullName.charAt(i));
         }
@@ -101,24 +106,28 @@ public class Name {
     /*
      * Creating a method to check if first name is valid (No null, no blank space, no more than 45 letters)
      * @param firstName first name validation check
-     * @throws IllegalArgumentException if first name is not good enough for requirement get warning messages
      */
-    private static void isFirstNameValid(final String firstName) throws IllegalArgumentException{
-        if (firstName == null || firstName.isBlank() || firstName.length() > MAX_NAME_LENGTH
-                || firstName.toLowerCase().contains("admin")) {
+    private static void validateFirstName(final String firstName) {
+
+        if (firstName == null || firstName.isBlank() || firstName.length() > MAX_NAME_LENGTH ||
+                firstName.toLowerCase().contains("admin")) {
+
             throw new IllegalArgumentException("bad account First Name: " + firstName);
+
         }
     }
 
     /*
      * Creating a method to check if last name is valid (No null, no blank space, no more than 45 letters)
      * @param lastName last name validation check
-     * @throws IllegalArgumentException if last name is not good enough for requirement get warning messages
      */
-    private static void isLastNameValid(final String lastName) throws IllegalArgumentException{
-        if (lastName == null || lastName.isBlank() || lastName.length() > MAX_NAME_LENGTH
-                || lastName.toLowerCase().contains("admin")) {
+    private static void validateLastName(final String lastName) {
+
+        if (lastName == null || lastName.isBlank() || lastName.length() > MAX_NAME_LENGTH ||
+                lastName.toLowerCase().contains("admin")) {
+
             throw new IllegalArgumentException("bad account Last Name: " + lastName);
+
         }
     }
 

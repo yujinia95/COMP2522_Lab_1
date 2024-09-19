@@ -17,8 +17,8 @@ public class BankClient extends Person {
     private static final int MAX_CLIENT_ID = 7;
 
     // Creating variables to set sing-up date and clientID.
-    private final Date signupDate;
-    private final String clientID;
+    private final Date      signupDate;
+    private final String    clientID;
 
     /**
      * Creating a constructor.
@@ -29,8 +29,11 @@ public class BankClient extends Person {
      */
     public BankClient(final Name name, final Date dateBorn, final Date dateDied, final Date signupDate
             , final String clientID) {
+
         super(name,dateBorn, dateDied);
+
         isClientIdValid(clientID);
+
         this.signupDate = signupDate;
         this.clientID = clientID;
     }
@@ -52,7 +55,9 @@ public class BankClient extends Person {
      */
     @Override
     public String getDetails() {
-        StringBuilder builder;
+
+        final StringBuilder builder;
+
         builder = new StringBuilder();
 
         builder.append(getName().getFullName());
@@ -70,7 +75,6 @@ public class BankClient extends Person {
     /**
      * Creating a method validating the number of digits for clientID.
      * @param clientID check if the range of clientID is valid
-     * @throws IllegalArgumentException if less than 6 or more than 7 digits
      */
     public static void isClientIdValid(final String clientID) {
 

@@ -14,40 +14,40 @@ package ca.bcit.comp2522.bank;
 public class Date {
 
     // Creating static variables to set a range of year.
-    private static final int STARTING_YEAR = 1;
-    private static final int CURRENT_YEAR = 2024;
+    private static final int        STARTING_YEAR =     1;
+    private static final int        CURRENT_YEAR =      2024;
 
     // Creating static variables to calculate leap year
-    private static final int NO_REMAINDER = 0;
-    private static final int LEAP_YEAR_DIVISIBLE_BY_FOURHUNDRED = 400;
-    private static final int LEAP_YEAR_DIVISIBLE_BY_FOUR = 4;
-    private static final int LEAP_YEAR_DIVISIBLE_BY_HUNDRED = 100;
+    private static final int        NO_REMAINDER =                          0;
+    private static final int        LEAP_YEAR_DIVISIBLE_BY_FOURHUNDRED =    400;
+    private static final int        LEAP_YEAR_DIVISIBLE_BY_FOUR =           4;
+    private static final int        LEAP_YEAR_DIVISIBLE_BY_HUNDRED =        100;
 
     // Creating static variables to set a range days of month.
-    private static final int FIRST_MONTH = 1;
-    private static final int SHORT_FEB_MONTH = 28;
-    private static final int LONG_FEB_MONTH = 29;
-    private static final int SHORT_MONTH = 30;
-    private static final int LONG_MONTH = 31;
+    private static final int        FIRST_MONTH =           1;
+    private static final int        SHORT_FEB_MONTH =       28;
+    private static final int        LONG_FEB_MONTH =        29;
+    private static final int        SHORT_MONTH =           30;
+    private static final int        LONG_MONTH =            31;
 
     // Creating static variables to set months.
-    private static final int JAN = 1;
-    private static final int FEB = 2;
-    private static final int MAR = 3;
-    private static final int APR = 4;
-    private static final int MAY = 5;
-    private static final int JUN = 6;
-    private static final int JULY = 7;
-    private static final int AUG = 8;
-    private static final int SEP = 9;
-    private static final int OCT = 10;
-    private static final int NOV = 11;
-    private static final int DEC = 12;
+    private static final int        JAN =   1;
+    private static final int        FEB =   2;
+    private static final int        MAR =   3;
+    private static final int        APR =   4;
+    private static final int        MAY =   5;
+    private static final int        JUN =   6;
+    private static final int        JULY =  7;
+    private static final int        AUG =   8;
+    private static final int        SEP =   9;
+    private static final int        OCT =   10;
+    private static final int        NOV =   11;
+    private static final int        DEC =   12;
 
     // Creating static variables to assign starting and ending year of 1800s and 2000s.
-    private static final int STARTING_YEAR_OF_1800S = 1800;
-    final int ENDING_YEAR_OF_1800S = 1899;
-    final int STARTING_YEAR_OF_2000S = 2000;
+    private static final int    STARTING_YEAR_OF_1800S =    1800;
+    final int                   ENDING_YEAR_OF_1800S =      1899;
+    final int                   STARTING_YEAR_OF_2000S =    2000;
 
     // Creating variables to get day, month, and year.
     private final int day;
@@ -62,9 +62,10 @@ public class Date {
      * @param day   will be assigned to the instance data: day
      */
     public Date(final int year, final int month, final int day) {
-        isYearValid(year);
-        isMonthValid(month);
-        isDayValid(year, month, day);
+
+        validateYear(year);
+        validateMonth(month);
+        validateDay(year, month, day);
 
         this.year = year;
         this.month = month;
@@ -114,7 +115,8 @@ public class Date {
      *
      * @return months of the week in String (e.g. 1 for "January")
      */
-    public String getMonthInString(final int month) throws IllegalArgumentException{
+    public String getMonthInString(final int month) {
+
         final String stringOfMonth;
 
         // Creating switch to return the month in Strings
@@ -174,9 +176,8 @@ public class Date {
     /*
      * Creating a method if the year is valid.
      * @param year check if the year is valid
-     * @throws IllegalArgumentException if the month is out of range and empty
      */
-    private static void isYearValid(final int year) throws IllegalArgumentException {
+    private static void validateYear(final int year) {
         if (STARTING_YEAR > year || CURRENT_YEAR < year) {
             throw new IllegalArgumentException("You must enter the correct year");
         }
@@ -187,7 +188,7 @@ public class Date {
      * @param year check if the year is leap year
      * @return false if the year is not leap year
      */
-    private static boolean isLeapYear(final int year) {
+    private static boolean validateLeapYear(final int year) {
 
         return (year % LEAP_YEAR_DIVISIBLE_BY_FOURHUNDRED == NO_REMAINDER ||
                 (year % LEAP_YEAR_DIVISIBLE_BY_FOUR == NO_REMAINDER && year % LEAP_YEAR_DIVISIBLE_BY_HUNDRED != NO_REMAINDER));
@@ -196,9 +197,8 @@ public class Date {
     /*
      * Creating a method if the month is valid.
      * @param month check if the month is valid
-     * @throws IllegalArgumentException if the month is null or blank
      */
-    private static void isMonthValid(final int month) throws IllegalArgumentException {
+    private static void validateMonth(final int month) {
 
         if (JAN > month || DEC < month) {
             throw new IllegalArgumentException("You must enter the month between " + JAN + "  to 12");
@@ -208,9 +208,9 @@ public class Date {
     /*
      * Creating a method if the day is valid.
      * @param day check if the day is valid
-     * @throws IllegalArgumentException if the day is out of range
      */
-    private static void isDayValid(final int year, final int month, final int day) throws IllegalArgumentException {
+    private static void validateDay(final int year, final int month, final int day) {
+
         final int maxDaysOfMonth;
 
         maxDaysOfMonth = numbOfDaysInMonth(month, year);
@@ -226,7 +226,7 @@ public class Date {
      * @param year take different number of days in February and check if it's leap year
      * @return the number of days
      */
-    private static int numbOfDaysInMonth(final int month, final int year) throws IllegalArgumentException{
+    private static int numbOfDaysInMonth(final int month, final int year) {
 
         switch (month) {
             case JAN:
@@ -243,7 +243,7 @@ public class Date {
             case NOV:
                 return SHORT_MONTH;
             case FEB:
-                return isLeapYear(year) ? LONG_FEB_MONTH : SHORT_FEB_MONTH;
+                return validateLeapYear(year) ? LONG_FEB_MONTH : SHORT_FEB_MONTH;
             default:
                 throw new IllegalArgumentException(String.format("Invalid days of %d", month));
         }
@@ -266,14 +266,17 @@ public class Date {
      * (Days code: SAT = 0/SUN = 1/MON = 2/TUE = 3/WED = 4/THUR = 5/FRI = 6)
      *
      * @return days of week in String
-     * @throws IllegalArgumentException if invalid month is founded in month code
      */
-    public String getDayOfTheWeek() throws IllegalArgumentException {
+    public String getDayOfTheWeek() {
 
         // Creating local variables to add value in Step 0.
-        final int startZeroStep0 = 0;
-        final int addTwoStep0 = 2;
-        final int addSixStep0 = 6;
+        final int startZeroStep0;
+        final int addTwoStep0;
+        final int addSixStep0;
+
+        startZeroStep0 = 0;
+        addTwoStep0 = 2;
+        addSixStep0 = 6;
 
         // Creating local variable to find remainder of step1 by 100
         final int remainderHundredStep1 = 100;
@@ -316,7 +319,7 @@ public class Date {
         // or add 2(for all dates in the 1800s)
         int stepZero = startZeroStep0;
 
-        if (isLeapYear(year) && (month == JAN || month == FEB)) {
+        if (validateLeapYear(year) && (month == JAN || month == FEB)) {
             stepZero += addSixStep0;
             if (STARTING_YEAR_OF_1800S <= year && ENDING_YEAR_OF_1800S > year) {
                 stepZero += addTwoStep0;

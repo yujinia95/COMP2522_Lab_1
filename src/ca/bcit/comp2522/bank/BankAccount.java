@@ -16,21 +16,21 @@ package ca.bcit.comp2522.bank;
 public class BankAccount {
 
     // Creating static variables to set range of PIN
-    private static final int MIN_PIN_VALUE = 0;
-    private static final int MAX_PIN_VALUE = 9999;
+    private static final int            MIN_PIN_VALUE = 0;
+    private static final int            MAX_PIN_VALUE = 9999;
 
 
     // Creating static variables to set default balance in bank account
-    private static final double MIN_BALANCE_USD = 0.00;
+    private static final double         MIN_BALANCE_USD = 0.00;
 
     // Creating variables to set bank client's basic information
-    private final BankClient client;
-    private final int pin;
-    private final String accountNumber;
-    private final Date accountCloseDate;
-    private double withdrewAmount;
-    private double balanceUsd;
-    private final String sex;
+    private final BankClient            client;
+    private final int                   pin;
+    private final String                accountNumber;
+    private final Date                  accountCloseDate;
+    private double                      withdrewAmount;
+    private double                      balanceUsd;
+    private final String                sex;
 
 
     /**
@@ -44,9 +44,11 @@ public class BankAccount {
      */
     public BankAccount( final BankClient client, final double balanceUsd, final int pin, final String accountNumber
             , final String sex, final Date accountCloseDate, final double withdrewAmount){
-        isPinValid(pin);
-        isAccountNumValid(accountNumber);
-        isBalanceUsdValid(balanceUsd);
+
+        validatePin(pin);
+        validateAccountNum(accountNumber);
+        validateBalanceUsd(balanceUsd);
+
         this.client = client;
         this.balanceUsd = balanceUsd;
         this.pin = pin;
@@ -59,9 +61,8 @@ public class BankAccount {
     /*
      * Creating a method to check if PIN is in the correct range.
      * @param pin the 4-digit PIN for account.
-     * @throws IllegalArgumentException if PIN is invalid
      */
-    private static void isPinValid(final int pin) throws IllegalArgumentException{
+    private static void validatePin(final int pin) {
         if(pin < MIN_PIN_VALUE || pin > MAX_PIN_VALUE) {
             throw new IllegalArgumentException(String.format("Invalid %d", pin));
         }
@@ -70,9 +71,8 @@ public class BankAccount {
     /*
      * Creating a method to check if account number is valid.
      * @param accountNumber accept minimum 6 to 7 length
-     * @throws IllegalArgumentException if the range of account number is out of range
      */
-    private static void isAccountNumValid(final String accountNumber) throws IllegalArgumentException{
+    private static void validateAccountNum(final String accountNumber) {
         final int min_length = 6;
         final int max_length = 7;
         if(accountNumber == null || accountNumber.length() < min_length || accountNumber.length() > max_length) {
@@ -83,9 +83,8 @@ public class BankAccount {
     /*
      * Creating a method to check if the bank account balance is correct.
      * @param balanceUsd accept over 00.00
-     * @throws IllegalArgumentException if the balance is less than minimum balance
      */
-    private static void isBalanceUsdValid(final double balanceUsd) throws IllegalArgumentException {
+    private static void validateBalanceUsd(final double balanceUsd) {
         if (balanceUsd < MIN_BALANCE_USD) {
             throw new IllegalArgumentException(String.format("Invalid %.2f",balanceUsd));
         }
@@ -95,9 +94,8 @@ public class BankAccount {
      * Creating a method to check if desired deposit money is more than $00.00 then
      * proceed deposit.
      * @param amountUsd amount of Usd to deposit
-     * @throws IllegalArgumentException if desired deposit money is less than $0
      */
-    private void deposit(final double amountUsd) throws IllegalArgumentException{
+    private void deposit(final double amountUsd) {
         if (amountUsd <= MIN_BALANCE_USD) {
             throw new IllegalArgumentException(String.format("Deposit amount must be greater than $%.2f.", balanceUsd));
         }
@@ -107,10 +105,8 @@ public class BankAccount {
     /*
      * Creating a method to check if desired withdrawal money is more than $00.00 and less than bank balance.
      * @param amountUsd amount of Usd to withdraw
-     * @throws IllegalArgumentException if desired withdraw money is less than $.
-     * @throws IllegalArgumentException if desired deposit money is more than balance
      */
-    private void withdraw(final double amountUsd) throws IllegalArgumentException{
+    private void withdraw(final double amountUsd) {
         if (amountUsd <= MIN_BALANCE_USD) {
             throw new IllegalArgumentException(String.format("The withdrawal amount must be greater than $%.2f.",
                     MIN_BALANCE_USD));
@@ -127,11 +123,9 @@ public class BankAccount {
      * withdraws money more than $00.00 and less than bank balance.
      * @param amountUsd amount of Usd to withdraw
      * @param pinToMatch checking PIN is matched
-     * @throws IllegalArgumentException if PIN is invalid
-     * @throws IllegalArgumentException if desired deposit money is less than $0
-     * @throws IllegalArgumentException if desired deposit money is more than balance
      */
-    private void withdraw(final double amountUsd, final int pinToMatch) throws IllegalArgumentException {
+    private void withdraw(final double amountUsd, final int pinToMatch) {
+
         if(pinToMatch != pin) {
             throw new IllegalArgumentException("Pin is not matched correctly");
         }
@@ -182,7 +176,9 @@ public class BankAccount {
      * @return client's information in String
      */
     public String getDetails() {
-        StringBuilder builder1;
+
+        final StringBuilder builder1;
+
         builder1 = new StringBuilder();
 
         builder1.append(client.getName().getFullName());
@@ -213,7 +209,9 @@ public class BankAccount {
      * @return client's information in String
      */
     public String printTransaction() {
-        StringBuilder builder2;
+
+        final StringBuilder builder2;
+
         builder2 = new StringBuilder();
 
         builder2.append(isMale(sex)? "His" : isFemale(sex)? "Her" : "No gender has typed");
